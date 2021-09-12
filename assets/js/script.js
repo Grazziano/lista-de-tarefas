@@ -18,12 +18,29 @@ button.innerText = 'Salvar';
 button.id = 'save';
 div.appendChild(button);
 
+button.addEventListener('click', saveContent);
+
 let list = document.createElement('ol');
 div.appendChild(list);
 
-let task = document.querySelector("input[type='text'");
-task.addEventListener('change', getContent);
+let taskList = [];
+
+function saveContent() {
+    let task = document.querySelector("input[type='text']").value;
+    taskList.push(task);
+    localStorage.setItem('taskList', taskList);
+    // console.log(localStorage.getItem('taskList'));
+}
 
 function getContent() {
-    console.log(task.value);
+    let arr = localStorage.getItem('taskList');
+    arr = arr.split(',');
+    for (let index = 0; index < arr.length; index += 1) {
+        let li = document.createElement('li');
+        li.innerText = arr[index];
+        list.appendChild(li);
+        console.log(arr[index]);
+    }
 }
+
+getContent();
