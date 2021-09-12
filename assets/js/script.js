@@ -21,10 +21,11 @@ div.appendChild(button);
 button.addEventListener('click', saveContent);
 
 let list = document.createElement('ol');
+list.classList.add('order-list');
 div.appendChild(list);
 
-let taskList = [];
-
+let taskList = localStorage.getItem('taskList') === null ? [] : localStorage.getItem('taskList').split(',');
+console.log(taskList);
 function saveContent() {
     let task = document.querySelector("input[type='text']").value;
     taskList.push(task);
@@ -34,12 +35,15 @@ function saveContent() {
 
 function getContent() {
     let arr = localStorage.getItem('taskList');
-    arr = arr.split(',');
-    for (let index = 0; index < arr.length; index += 1) {
-        let li = document.createElement('li');
-        li.innerText = arr[index];
-        list.appendChild(li);
-        console.log(arr[index]);
+    if (arr != null) {
+        arr = arr.split(',');
+        for (let index = 0; index < arr.length; index += 1) {
+            let li = document.createElement('li');
+            li.classList.add('line');
+            li.innerText = arr[index];
+            list.appendChild(li);
+            console.log(arr[index]);
+        }
     }
 }
 
